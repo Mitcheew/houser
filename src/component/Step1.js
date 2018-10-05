@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { connect } from 'react-redux';
+import { updateName, updateAddress, updateCity, updateState, updateZip } from '../ducks/reducer'
 
-export default class Wizard extends Component {
+class Step1 extends Component {
     constructor(){
         super()
         this.state = {
@@ -45,31 +47,23 @@ export default class Wizard extends Component {
         })
     }
 
-    addHouse(){
-        const {name, address, state, city, zip} = this.state
-        axios.post('/api/houses/', {name, address, city, state, zip})
-        .then(() => {
-            window.location = '/'
-        })
-    }
-
     render(){
+        console.log(this.props)
+        const {updateName, updateAddress, updateCity, updateState, updateZip} = this.props
         return (
             <div>
-                {/* Add New Listing
-                <Link to='/'><button>Cancel</button></Link> */}
                 <div>
                     <h3>Property Name</h3>
-                    <input onChange={(e) => {this.handleNameChange(e.target.value)}} value={this.state.name} />
+                    <input onChange={(e) => {updateName(e.target.value)}} />
                     <h3>Address</h3>
-                    <input onChange={(e) => {this.handleAddressChange(e.target.value)}} value={this.state.address} />
+                    <input onChange={(e) => {updateAddress(e.target.value)}} />
                     <h3>City</h3>
-                    <input onChange={(e) => {this.handleCityChange(e.target.value)}} value={this.state.city} />
+                    <input onChange={(e) => {updateCity(e.target.value)}} />
                     <h3>State</h3>
-                    <input onChange={(e) => {this.handleStateChange(e.target.value)}} value={this.state.state} />
+                    <input onChange={(e) => {updateState(e.target.value)}} />
                     <h3>Zip</h3>
-                    <input onChange={(e) => {this.handleZipChange(e.target.value)}} value={this.state.zip} />
-                    <Link to='/Wizard/Step2'><button onClick={() => {}}>Next Step</button></Link>
+                    <input onChange={(e) => {updateZip(e.target.value)}} />
+                    <Link to='/Wizard/Step2'><button onClick={() => {connect()}}>Next Step</button></Link>
                 </div>
             </div>
         )
@@ -79,3 +73,16 @@ export default class Wizard extends Component {
 
 
 }
+
+function mapStateToProps(st) {
+    const { name, address, city, state, zip } = st;
+    return {
+        name,
+        address,
+        city, 
+        state,
+        zip
+    };
+}
+
+export default connect(mapStateToProps, { updateName, updateAddress, updateCity, updateState, updateZip })(Step1)
