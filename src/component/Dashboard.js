@@ -29,7 +29,7 @@ export default class Dashboard extends Component {
     render() {
         const houseList = this.state.houses.map(house => {
             return (
-            <House id={house.id} key={house.id} name={house.name} address={house.address} city={house.city} state={house.state} zip={house.zip} delete={this.handleDeleteHouse}/>
+            <House id={house.id} key={house.id} name={house.name} address={house.address} city={house.city} state={house.state} zip={house.zip} image={house.image} mortgage={house.mortgage} rent={house.rent}  delete={this.handleDeleteHouse}/>
             )
         })
         return (

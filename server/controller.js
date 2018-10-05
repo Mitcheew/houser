@@ -1,8 +1,8 @@
 module.exports = {
     create: (req, res) => {
         const dbInstance = req.app.get('db')
-        const {name, address, city, state, zip} = req.body;
-        dbInstance.add_house([name, address, city, state, zip])
+        const {name, address, city, state, zip, image, mortgage, rent} = req.body;
+        dbInstance.add_house([name, address, city, state, zip, image, mortgage, rent])
         .then((response) => {
         res.status(200).send(response)
         })
